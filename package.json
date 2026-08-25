@@ -1,0 +1,19 @@
+{
+  "name": "starter-cursus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "author": "Wim",
+  "license": "MIT",
+  "devDependencies": {
+    "@vuepress/plugin-container": "^2.0.0-beta.67",
+    "@vuepress/plugin-register-components": "^2.0.0-beta.67",
+    "vuepress": "^2.0.0-beta.67",
+    "vuepress-plugin-mathjax": "^1.2.8"
+  }
+}
