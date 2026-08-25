@@ -70,7 +70,9 @@ De communicatie die wij gebruiken ziet er conceptueel zo uit:
 
 :::warning
 In ons project:
+
 **ESP32 = Peripheral**
+
 **Raspberry Pi = Central**
 :::    
 
