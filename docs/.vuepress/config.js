@@ -37,7 +37,7 @@ module.exports = {
         ]
       },
       {
-        text: 'Introduction to Programming',
+        text: 'ESP32 Deepsleep',
         children: [
           '/deepsleep/01-intro/README.md',
           '/deepsleep/02-timerWakeUp/README.md',
@@ -50,6 +50,8 @@ module.exports = {
           '/bluetooth/01-intro/README.md',
           '/bluetooth/02-gatt/README.md',
           '/bluetooth/03-esp32/README.md',
+          '/bluetooth/04-rpi/README.md',
+          '/bluetooth/05-opdrachten/README.md',
         ]
       },
            
