@@ -149,3 +149,125 @@ def ble_notification_handler(sender, data):
 
 Wanneer de ESP32: `TELLER:10` stuurt, komt dat hier binnen.
 
+## De BLE-database van onze ESP32
+
+De Raspberry Pi ontdekte:
+
+![GATT ](./images/7.png)
+
+Dit kunnen studenten rechtstreeks vergelijken met de ESP32-code. ESP32:  
+`_UART_UUID` -> `6e400001...`
+`_UART_TX` -> `6e400003...`
+`_UART_RX` -> `6e400002...`
+
+## Wat gebeurt er bij verbinding?
+
+De ESP32 ontvangt een BLE-event:
+
+```python
+if event == _IRQ_CENTRAL_CONNECT:
+```
+Daarna:
+```python
+conn_handle, _, _ = data
+```
+De `conn_handle` identificeert de actieve BLE-verbinding. Vervolgens:
+```python
+self.connections.add(conn_handle)
+```
+De verbinding wordt opgeslagen.
+
+## Waarom een set()?
+
+De code gebruikt: `self.connections = set()`. Een ESP32 kan in principe meerdere BLE-centrals ondersteunen. De actieve verbindingen worden daarom bijgehouden in een set:
+
+![GATT ](./images/8.png)
+
+Elke waarde is een `conn_handle`. Daarna:
+```python
+for conn in self.connections:
+```
+kan de ESP32 data naar alle verbonden centrals sturen.
+
+## BLE disconnect
+
+Wanneer de verbinding verbroken wordt:
+```python
+self.connections.discard(
+    conn_handle
+)
+```
+Daarna:
+```python
+self._advertise()
+```
+De ESP32 begint opnieuw met advertising. Dat betekent:
+
+![GATT ](./images/9.png)
+
+Dit is een belangrijk principe voor IoT-systemen.
+
+## Data ontvangen op de ESP32
+
+Wanneer de Raspberry Pi schrijft naar RX:
+
+```python
+elif event == _IRQ_GATTS_WRITE:
+```
+wordt de RX-handle gecontroleerd:
+```python
+if value_handle == self.rx_handle:
+```
+Daarna lezen we:
+```python
+data = self.ble.gatts_read(
+    self.rx_handle
+)
+```
+De bytes worden omgezet naar tekst:
+```python
+self.last_command = data.decode().strip()
+```
+Bijvoorbeeld: `LEDON`
+
+## Waarom zijn BLE-berichten bytes?
+
+BLE transporteert uiteindelijk bytes. Bijvoorbeeld: `LEDON` wordt: `4C 45 44 4F 4E` , daarom doen we:
+
+```python
+message.encode("utf-8")
+```
+en bij ontvangst:
+```python
+data.decode("utf-8")
+```
+Conceptueel:
+![GATT ](./images/10.png)
+
+## Onze volledige communicatie
+
+De volledige keten is:
+
+![GATT ](./images/11.png)
+
+Daarna komt MQTT:
+
+![GATT ](./images/12.png)
+
+## Belangrijke BLE-parameters
+
+| Parameter            | Betekenis                | In ons project       |
+| -------------------- | ------------------------ | -------------------- |
+| BLE                  | Bluetooth Low Energy     | ja                   |
+| Central              | zoekt/verbindt           | Raspberry Pi         |
+| Peripheral           | adverteert               | ESP32                |
+| Advertising          | apparaat bekendmaken     | ESP32                |
+| Advertising interval | tijd tussen advertising  | 100 ms               |
+| GATT                 | datastructuur            | ja                   |
+| Service              | groep functionaliteit    | NUS                  |
+| Characteristic       | datapunt                 | TX/RX                |
+| UUID                 | unieke identificatie     | 128 bit              |
+| Notify               | peripheral → central     | TX                   |
+| Write                | central → peripheral     | RX                   |
+| conn_handle          | verbinding identificeren | ESP32                |
+| RSSI                 | signaalsterkte           | bijvoorbeeld −58 dBm |
