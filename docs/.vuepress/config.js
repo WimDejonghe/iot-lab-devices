@@ -19,8 +19,8 @@ module.exports = {
     logo: 'https://www.vives.be/sites/default/files/uploads/huisstijl/Logo VIVES Hogeschool - Smile.png',
     navbar: [
       { text: 'Toledo', link: 'https://toledo.kuleuven.be/portal' },
-      { text: 'Report Issue', link: 'https://github.com/WimDejonghe/iot-devices' },      
-      { text: 'Organization', link: 'https://github.com/WimDejonghe/iot-devices' }
+      { text: 'Report Issue', link: 'https://github.com/WimDejonghe/iot-lab-devices' },      
+      { text: 'Organization', link: 'https://github.com/WimDejonghe/iot-lab-devices' }
 
     ],
     sidebar: [
