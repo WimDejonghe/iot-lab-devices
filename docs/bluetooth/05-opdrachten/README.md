@@ -8,7 +8,7 @@ mathjax:
 ***
 <div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
-Opdracht1: BLE comm ESP32 <-> smartphone . 
+Opdracht1: BLE comm ESP32 &lt;-&gt; smartphone . 
 </p>
 <ul style="color: white;">
 <li>Installeer een app op uw smartphone die in staat is om BLE communicatie kan opzetten zoals Serial Bluetooth Terminal </li>
@@ -23,7 +23,7 @@ Opdracht1: BLE comm ESP32 <-> smartphone .
 ***
 <div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
-Opdracht2: BLE comm ESP32 <-> RPi <-> MQTT broker <->... . 
+Opdracht2: BLE comm ESP32 &lt;-&gt; RPi &lt;-&gt; MQTT broker &lt;-&gt;... . 
 </p>
 
 <ul style="color: white;">
