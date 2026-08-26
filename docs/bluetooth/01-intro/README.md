@@ -155,6 +155,7 @@ Omdat BLE ontworpen is voor laag energieverbruik.
 Een korter advertising interval betekent:
 > - sneller gevonden; 
 > - maar meer energieverbruik.
+
 Een langer interval betekent:
 > - lager energieverbruik;
 > - maar ietys langere zoektijd.
@@ -168,9 +169,7 @@ Onze ESP32-code maakt:
 payload = bytearray(b"\x02\x01\x06")
 ```
 
-Dit zijn drie bytes, ze bevatten BLE flags.
-
-Vervolgens:
+Dit zijn drie bytes, ze bevatten BLE flags. Vervolgens:
 
 ```python
 name = self.name.encode()
