@@ -54,6 +54,14 @@ module.exports = {
           '/bluetooth/05-opdrachten/README.md',
         ]
       },
+      {
+        text: 'LORA',
+        children: [
+          '/lora/01-intro/README.md',
+          '/lora/02-lora/README.md',
+          '/lora/03-things/README.md',
+        ]
+      },
            
     ],
     sidebarDepth: 1,
