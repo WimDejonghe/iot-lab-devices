@@ -3,7 +3,6 @@
 
 **Doelgroep:** studenten STEM, elektronica, IoT en programmeren  
 **Niveau:** basiskennis elektriciteit, elektronica en programmeren  
-**Duur:** ongeveer 3 à 4 uur theorie + labo  
 **Technologie:** LoRa, LoRaWAN, The Things Network (TTN)
 
 ---

@@ -4,91 +4,86 @@ mathjax:
 ---
 
 
-# Timer Wake Up
+# ESP32 - Nucleo-LoRaWAN
 
-![Wake Up op basis van tijd (timer).](./images/fig1.png)
+## Nucleo Lora Module
 
-De ESP32 kan in een diepe slaapstand gaan en vervolgens op vooraf ingestelde tijdstippen weer wakker worden. Deze functie is vooral handig voor projecten die tijdstempels of dagelijkse taken vereisen, terwijl het energieverbruik laag blijft.
+Dit bordje bezit de nodige elektronica om bij een `LoRa End node` de communicatie te verzorgen. Het bordje kan communiceren met een ander `LoRa module` of met een `LoRa gateway` (in beheer van **The Things Network**). In de gebouwen van VIVES staat reeds een `LoRa gateway` opgesteld. Je kan trouwens de een map raadplegen:
 
-Om de ESP32 voor een vooraf bepaald aantal seconden in de diepe slaapstand te zetten, hoeft u alleen maar de functie `deepsleep()` uit de `machine`-module te gebruiken. Deze functie accepteert als argumenten de slaaptijd in milliseconden, zoals hieronder weergegeven:
+[Map Gateway The Things Network](https://ttnmapper.org/heatmap/)
+
+`The Things Network` zorgt ervoor dat de `LoRa gateway's` een verbinding hebben met het internet. Een eigen gateway opzetten kan je ook altijd zelf doen, maar dit valt hier buiten de scope van deze cursus.
+
+Met de `LoRa End Node` moet je je echter geen zorgen maken met welke gateway te zal communiceren.
+
+![ESP32).](./images/esp.png)
+![Nucleo-Lora module](./images/fig1.png)
+
+De ESP32 laten we hier communiceren met de LoRa module via UART (Rx-Tx) communicatie. Beide bordjes werken op 3,3V, dat is dus goed en veilig. Er moeten geen spanningsomzettingen gebeuren, wat soms in interfacing wel het geval is.
+
+De ESP zal hier als END-node functioneren. Later kunnen we de ESP32 van een sensor voorzien zodat die data naar het internet kan versturen via LoRa's **the things network**. Daarna kunnen we via MQTT op ieder device op het internet de data visualiseren.
+
+## UART connectie ESP - LoRa-module
+
+Eerst zorg je dat je kan communiceren tussen de twee bordjes via een UART-com. Daarvoor zijn vier draadjes nodig tussen ESP en LoRa-bordje. Twee om het LoRa-bordje te voorzien van power (3,3V & GND). Zoek hier voor de twee pinnen op de ESP en de twee pinnen op het LoRa-bordje
+
+![alt](./images/fig2.png)
+![alt](./images/fig3.png)
+
+:::warning
+Maak hier geen fout!!!! Een verkeerde verbinding kunnen bordjes stuk maken!!!! 
+Bij twijfel, vraag raad aan docent.
+:::
+
+![alt](./images/fig4.png)
+
+Verbind dus met 4 draden ESP en Nucleo LORA. **Teken dit in een schema!!**
+3V3 - GND van ESP naar Nucleo LORA
+RX/TX tussen ESP en Nucleo LORA 
+
+
+## AT commando's
+
+Eenmaal de hardware connectie is gerealiseerd kan je dit uittesten door via een UART terminal programma zoals RealTerm of Putty of iets anders, commando' te versturen. 
+
+> :bulb: **Opmerking:** Je zou dit rechtsreeks op het LoRa-bordje (dus zonder ESP32) maar dan moet je een **USB to TTL Serial Cable** hebben en liefst een die werkt met 3,3V. Je kan er zo eentje gebruiken van school als je dat wenst (vraag docent), maar is eigenlijk niet nodig omdat je dit kan doen met de ESP32.
+
+Echter kan je dit dus doen via de ESP32 met de bedrading (RX-TX-3,3V-GND) zoals eerder beschreven.
+
+:::warning
+Bestudeer eerst heel goed waar de `Rx` en de `Tx` pin op de ESP32 Feather zitten. Er is een verschil tussen V1 en V2 versie!!
+Bestudeer ook heel goed waar `Rx` en `Tx` pinnen zitten van de LoRa-module (zie eerdere figuur).
+
+Natuurlijk moet je ervoor zorgen dat `Rx` naar `Tx` loopt en omgekeerd!!
+:::
+
+De parameters van de communicatie zijn : `115200 baud, N, 8,1,P`
+
+De MicroPython code voor de ESP, kan je communiceren met het LoRa-bordje via AT commando's:
+
+![alt](./images/fig5.png)
+
+:::tip
+Het terminal venster in `Thonny` is niet altijd handig, voor ontvangen data wel, maar niet om data te versturen. Het is beter om `RealTerm` of `Putty` daarvoor te gebruiken. Start de code op de ESP32 en sluit dan `Thonny` af. Start daarna `Realterm` of `Putty`. Geef uitleg waarom je dit moet doen.
+:::
+
+Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiseren.
+
+![Configuratie RX TX](./images/fig6.png)
+
+## The Things Network
+
+<YoutubeVideo videoId="rK8oJHZ9Q7U" />
+
+> - Maak een account aan op The Things Network
+> - Maak binnen uw account op The Things Network een Application aan
+> - Maak binnen die applicatie een END-device aan
+> - 
 
 ```python
 machine.deepsleep(sleep_time_ms)
 ```
 
-Laten we een eenvoudig voorbeeld bekijken om te zien hoe het werkt. In de volgende code bevindt de ESP32 zich 10 seconden in de diepe slaapstand, waarna hij ontwaakt, een LED laat knipperen en vervolgens weer in slaapstand gaat.
-
-```python
-from machine import deepsleep
-from machine import Pin
-from time import sleep
-
-led = Pin (13, Pin.OUT)
-
-#blink LED
-led.value(1)
-sleep(1)
-led.value(0)
-sleep(1)
-
-# wait 5 seconds so that you can catch the ESP awake to establish a serial communication later
-# you should remove this sleep line in your final script
-sleep(5)
-
-print('Im awake, but Im going to sleep')
-
-#sleep for 10 seconds (10000 milliseconds)
-deepsleep(10000)
-```
-
-:::warning
-Let wel dat de microcontroller bij het ontwaken een herstart kent. Dit wil zeggen als je deze code laat runnen vanuit Thonny editor dat de controller terug in de start Python editor komt. 
-Wil je dit als een continu proces laten gebeuren dan is het noodzakelijk om dit bestand als main.py op te slaan op de microcontroller zelf!! Wil je nadien opnieuw in programmeerstatus komen, dan is het noodzakelijk om MicroPython opnieuw te installeren op de microcontroller.
-:::
-
-## How the Code Works
-
-Eerst, importeer de noodzakelijke bibliotheken (libraries):
-
-```python
-import machine
-from machine import Pin
-from time import sleep
-```
-
-Maak een `Pin`-object aan dat verwijst naar <span style="background-color:powderblue;">GPIO 13</span> met de naam `led`. Dit verwijst naar de ingebouwde LED.
-
-```python
-led = Pin (13, Pin.OUT)
-```
-
-De volgende code laat de LED knipperen.
-
-```python
-led.value(1)
-sleep(1)
-led.value(0)
-sleep(1)
-```
-
-In dit geval laten we een LED knipperen ter demonstratie, maar het is de bedoeling dat je je hoofdcode in dit gedeelte van het script plaatst.
-
-Voordat het apparaat in slaapstand gaat, voegen we een vertraging van 5 seconden toe en printen we een bericht om aan te geven dat het in slaapstand gaat.
-
-```python
-sleep(5)
-print('Im awake, but Im going to sleep')
-```
-
-Het is belangrijk om een ​​vertraging van 5 seconden in te bouwen voordat het bord in slaapstand gaat tijdens het ontwikkelen van de scripts. Wanneer je nieuwe code naar het bord wilt uploaden, moet het bord wakker zijn. Zonder deze vertraging is het lastig om het bord later wakker te krijgen om nieuwe code te uploaden. Nadat de definitieve code klaar is, kun je de vertraging verwijderen.
-
-Zet de ESP32 tot slot 10 seconden (10.000 milliseconden) in de diepe slaapstand.
-
-```python
-machine.deepsleep(10000)
-```
-
-Na 10 seconden wordt de ESP32 wakker en voert de code vanaf het begin uit, net zoals wanneer je op de EN/RST-knop zou drukken.
 
 
 ## Opdrachten:
