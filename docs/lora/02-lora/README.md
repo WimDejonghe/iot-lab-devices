@@ -59,13 +59,184 @@ Natuurlijk moet je ervoor zorgen dat `Rx` naar `Tx` loopt en omgekeerd!!
 
 De parameters van de communicatie zijn : `115200 baud, N, 8,1,P`
 
-De MicroPython code voor de ESP, kan je communiceren met het LoRa-bordje via AT commando's:
+De MicroPython code voor de ESP waarmee je kan communiceren met het LoRa-bordje via AT commando's:
 
-![alt](./images/fig5.png)
+```python
+from machine import UART
+import time
+import sys
+import uselect
 
-:::tip
-Het terminal venster in `Thonny` is niet altijd handig, voor ontvangen data wel, maar niet om data te versturen. Het is beter om `RealTerm` of `Putty` daarvoor te gebruiken. Start de code op de ESP32 en sluit dan `Thonny` af. Start daarna `Realterm` of `Putty`. Geef uitleg waarom je dit moet doen.
-:::
+
+# ============================================================
+# UART CONFIGURATIE
+# ESP32 Feather V2
+# TX = GPIO8
+# RX = GPIO7
+# ============================================================
+
+uart = UART(
+    1,
+    baudrate=115200,
+    bits=8,
+    parity=None,
+    stop=1,
+    tx=8,
+    rx=7
+)
+
+
+# ============================================================
+# AT-DRIVER
+# ============================================================
+
+class ATDriver:
+
+    def __init__(self, uart, timeout=3000):
+        self.uart = uart
+        self.timeout = timeout
+        self.rx_buffer = b""
+
+    # --------------------------------------------------------
+    # UART-buffer leegmaken
+    # --------------------------------------------------------
+
+    def flush(self):
+        self.rx_buffer = b""
+
+        while self.uart.any():
+            self.uart.read()
+
+
+    # --------------------------------------------------------
+    # AT-command sturen
+    # --------------------------------------------------------
+
+    def send(self, command, timeout=None):
+
+        if timeout is None:
+            timeout = self.timeout
+
+        # Oude data verwijderen
+        self.flush()
+
+        # Zorg ervoor dat AT aanwezig is
+        if not command.startswith("AT"):
+            command = "AT" + command
+
+        print("TX:", command)
+
+        # I-NUCLEO verwacht CR als afsluiting
+        self.uart.write(command + "\r")
+
+        # Wacht op antwoord
+        start = time.ticks_ms()
+
+        while time.ticks_diff(time.ticks_ms(), start) < timeout:
+
+            if self.uart.any():
+
+                data = self.uart.read()
+
+                if data:
+                    self.rx_buffer += data
+
+                    # Controleer of een volledige regel ontvangen is
+                    if b"\r\n" in self.rx_buffer:
+
+                        lines = self._extract_lines()
+
+                        if lines:
+                            return lines
+
+            time.sleep_ms(5)
+
+        # Timeout
+        if self.rx_buffer:
+            print("TIMEOUT - onvolledige data:",
+                  repr(self.rx_buffer))
+
+        else:
+            print("TIMEOUT - geen antwoord")
+
+        return None
+
+
+    # --------------------------------------------------------
+    # Regels uit de ontvangstbuffer halen
+    # --------------------------------------------------------
+
+    def _extract_lines(self):
+
+        lines = []
+
+        while b"\r\n" in self.rx_buffer:
+
+            line, self.rx_buffer = \
+                self.rx_buffer.split(b"\r\n", 1)
+
+            if line:
+                try:
+                    line = line.decode("utf-8")
+                except:
+                    line = str(line)
+
+                lines.append(line)
+
+        return lines
+
+
+# ============================================================
+# DRIVER INITIALISEREN
+# ============================================================
+
+at = ATDriver(uart)
+
+
+# ============================================================
+# ESP32 KLAARMAKEN
+# ============================================================
+
+time.sleep_ms(1000)
+
+print("I-NUCLEO-LRWAN AT interface")
+print("--------------------------------")
+
+
+# Test AT
+response = at.send("AT")
+
+if response:
+    print("RX:", response)
+else:
+    print("Geen antwoord op AT")
+
+
+# ============================================================
+# THONNY SHELL -> I-NUCLEO
+# ============================================================
+
+poller = uselect.poll()
+poller.register(sys.stdin, uselect.POLLIN)
+
+
+while True:
+
+    events = poller.poll(100)
+
+    if events:
+
+        command = sys.stdin.readline().strip()
+
+        if command:
+
+            response = at.send(command)
+
+            if response:
+
+                for line in response:
+                    print("RX:", line)
+```
 
 Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiseren.
 
@@ -80,9 +251,69 @@ Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiser
 > - Maak binnen die applicatie een END-device aan
 > - 
 
-```python
-machine.deepsleep(sleep_time_ms)
+End device toevoegen 1/4:
+![Configuratie RX TX](./images/fig5.png)
+
+End device toevoegen 2/4: DevEUI nodig
+![Configuratie RX TX](./images/fig7.png)
+
+End device toevoegen 3/4: DevEUI opvragen
+![Configuratie RX TX](./images/fig8.png)
+
+End device toevoegen 4/4: register end device
+![Configuratie RX TX](./images/fig9.png)
+
+Na deze stappen is het noodzakelijk om het End device te initialiseren en een join te laten uitvoeren. Dit doe je door volgende commando's uit te voeren:
+
+![Configuratie RX TX](./images/fig11.png)
+
+![Configuratie RX TX](./images/fig10.png)
+
+Op de Things Network kan je de Live data van het End dev ice zien:
+
+![Configuratie RX TX](./images/fig12.png)
+
+Indien er data zou klaar staan om te ontvangen dat zal end node dit na een SEND ook receiven!!! Je moet dus telkens het initiatief nemen (SEND) om data als END node te ontvangen!!
+Verstuur eens data vanuit TTN naar een END Node:
+
+![Configuratie RX TX](./images/fig13.png)
+
+![Configuratie RX TX](./images/fig14.png)
+
+### MQTT
+
+MQTT broker op de TTN kan je gebruiken om data uit te wisselen:
+
+[MQTT broker info op TTN](https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/)
+
+![Configuratie RX TX](./images/fig15.png)
+
+Met Function1:
+
+```javascript
+msg.payload = Buffer.from(msg.payload.uplink_message.frm_payload, "base64").toString("hex");
+return msg;
+
 ```
+
+Met Function2:
+
+```javascript
+return {
+    "payload": {
+        "downlinks": [{
+            "f_port": 15,
+            "frm_payload": msg.payload.toString("base64"),
+            "priority": "NORMAL"
+        }]
+    }
+}
+```
+
+In  de inject node zit een buffer met als inhoud :
+
+![Configuratie RX TX](./images/fig16.png)
+
 
 
 
