@@ -249,7 +249,6 @@ Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiser
 > - Maak een account aan op The Things Network
 > - Maak binnen uw account op The Things Network een Application aan
 > - Maak binnen die applicatie een END-device aan
-> - 
 
 End device toevoegen 1/4:
 ![Configuratie RX TX](./images/fig5.png)
@@ -266,12 +265,71 @@ End device toevoegen 4/4: register end device
 Na deze stappen is het noodzakelijk om het End device te initialiseren en een join te laten uitvoeren. Dit doe je door volgende commando's uit te voeren:
 
 ![Configuratie RX TX](./images/fig11.png)
+![Configuratie RX TX](./images/fig17.png)
+
+Neem voor `JOINEUI` een waarde die voor u herkenbaar is. 
+
+:::tip
+Plaats in het nummer bijvoorbeeld het schooljaar.
+:::
+
 
 ![Configuratie RX TX](./images/fig10.png)
 
-Op de Things Network kan je de Live data van het End dev ice zien:
+:::warning
+Zorg dat de `AT+APPEUI` nummer hetzelfde is als van `JOINEUI` in vorige figuur!!
+:::
+
+Op de Things Network kan je de Live data van het End device zien:
 
 ![Configuratie RX TX](./images/fig12.png)
+
+### Data verzenden vanaf de node naar TTN
+
+Eenmaal je JOIN is accepted (wat wil zeggen dat je verbinding hebt met een LoRa gateway en dat uw device herkent wordt door TTN)
+
+Je krijgt een dergelijk bericht in de Live Data van TTN:
+
+![Configuratie RX TX](./images/fig18.png)
+
+```text
+AT+NTYP=1
+TX: AT+NTYP=1
+RX: OK
+AT+DR=3
+TX: AT+DR=3
+RX: OK
+AT+RX2DR=3
+TX: AT+RX2DR=3
+RX: OK
+AT+DC=0
+TX: AT+DC=0
+RX: OK
+AT+APPEUI=0000002025000000
+TX: AT+APPEUI=0000002025000000
+RX: OK
+AT+AK=059A707A9ADDC4969763A34031699327
+TX: AT+AK=059A707A9ADDC4969763A34031699327
+RX: OK
+AT+JOIN=1
+TX: AT+JOIN=1
+RX: OK
+AT+SEND=2,000000000000007F0000000000000000,1
+TX: AT+SEND=2,000000000000007F0000000000000000,1
+RX: OK
+```
+
+In het laatste commando zie AT+SEND.
+
+![Configuratie RX TX](./images/fig19.png)
+
+De data bestaat dus uit 32 hex getallen of 32 bytes. Het getal 2 is een poort getal en de 1 verwijst naar onmiddelijke verzending.
+
+:::warning
+Het zal dus hier aan de student zijn om een manier te vinden om sensor data van de END node is zo een formaat te gieten!!! En het dan later bij een dashboard dit terug te ontcijferen.
+:::
+
+***********************************************
 
 Indien er data zou klaar staan om te ontvangen dat zal end node dit na een SEND ook receiven!!! Je moet dus telkens het initiatief nemen (SEND) om data als END node te ontvangen!!
 Verstuur eens data vanuit TTN naar een END Node:
