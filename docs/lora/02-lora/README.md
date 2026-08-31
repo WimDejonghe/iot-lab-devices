@@ -329,18 +329,24 @@ De data bestaat dus uit 32 hex getallen of 32 bytes. Het getal 2 is een poort ge
 Het zal dus hier aan de student zijn om een manier te vinden om sensor data van de END node is zo een formaat te gieten!!! En het dan later bij een dashboard dit terug te ontcijferen.
 :::
 
-***********************************************
+### Data ontvangen door End Node
 
-Indien er data zou klaar staan om te ontvangen dat zal end node dit na een SEND ook receiven!!! Je moet dus telkens het initiatief nemen (SEND) om data als END node te ontvangen!!
+Data kan in TTN worden gescheduld (klaargezet) om bij de eerstvolgende ontvangst van data van die End Node, deze data kan worden verzonden.
+
+Indien er dus data zou klaar staan om te ontvangen (verzonden door TTN) dan zal End node dit na een SEND ook RECEIVEN (ontvangen)!!! Je moet dus telkens het initiatief nemen (SEND) om data als END node te ontvangen!!
 Verstuur eens data vanuit TTN naar een END Node:
 
 ![Configuratie RX TX](./images/fig13.png)
 
+Hier wordt dus een bericht klaar gemaakt van 5 bytes (het kunnen er ook meer of minder zijn) die bij de eerstvolgende ontvangst van data door TTN van die End Node, TTN zal die data dan doorsturen naar die specifieke END Node.
+
 ![Configuratie RX TX](./images/fig14.png)
+
+Je ziet in de vorige figuur dat na het verzenden van 32 bytes data er een +RC van 5 bytes wordt verzonden van de TTN naar de End Node.
 
 ### MQTT
 
-MQTT broker op de TTN kan je gebruiken om data uit te wisselen:
+Er is een MQTT broker op TTN beschikbaar die je als user kan gebruiken. Die MQTT broker op de TTN kan je gebruiken om data uit te wisselen met je End Node:
 
 [MQTT broker info op TTN](https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/)
 
@@ -375,30 +381,3 @@ In  de inject node zit een buffer met als inhoud :
 
 
 
-## Opdrachten:
-
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
-<p style="color:lightgreen; margin:10px">
-Opdracht1: ESP32 in deepsleep en wakeup op basis van tijd.
-<ul style="color: white;">
-<li>Breng de ESP32 in een cyclus van 20 seconden werken (laat een LED knipperen op een frequentie van 10Hz).</li>
-<li>Na deze cyclus gaat de ESP32 voor 20 seconden in een deepsleep, waarna de cyclus zich herhaalt.</li>
-<li>Meet het stroomverbruik van de microcontroller, eens in werkmodus en eens in slaapmodus. Wat zijn die waarden? Wat is het totaal vermogen in deze twee toestanden?</li>
-<li>Uitbreiding: registreer om de 20 seconden uw GPS locatie en publiceer deze locatie op een dashboard. Laat de microcontroller op een batterij werken. </li>
-</ul>
-</p>
-</div>
-
--
-
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
-<p style="color:lightgreen; margin:10px">
-Opdracht3: ESP32 in deepsleep en wakeup op basis van tijd.
-<ul style="color: white;">
-<li>Maak een toepassing die de omgevingstemperatuur meet en die waarde om de 20 seconden publiceert op een MQTT broker topic. </li>
-<li>Intussentijd zit de microcontroller in een deepsleep.</li>
-<li>Maak een dashboard met de meetwaarde.</li>
-<li>Uitbreiding: publiceer de waarde tevens in een database en pas dashboard aan zodat deze een historiek weergeeft.</li>
-</ul>
-</p>
-</div>
