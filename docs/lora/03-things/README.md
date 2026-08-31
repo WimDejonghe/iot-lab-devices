@@ -41,7 +41,7 @@ Opdracht3: Visualisatie van potentiometer 2.
 <li>De communicatie moet dus via LoraWan, TTN en MQTT verlopen.</li>
 
 <li>Zorg ervoor dat maar een getal tussen 0 en 10 wordt verstuurd. Hier gebruik je dan weer geen tijdsinterval maar de tijdstippen van communicatie op basis van verandering van waarde (bijv als pot waarde verandert van 3 naar 4). Zolang pot waarde op een geheel getal blijft staan, wordt er geen nieuwe data verzonden!! </li>
-<li>Uitbreiding: Combineer deze applicatie met ook de visualisatie van de 4 drukknoppen.</li>
+
 </ul>
 </p>
 </div>
@@ -56,7 +56,7 @@ Opdracht4: Visualisatie van potentiometer + buttons.
 <li>De communicatie moet dus via LoraWan, TTN en MQTT verlopen.</li>
 
 <li>Zorg ervoor dat maar een getal tussen 0 en 10 wordt verstuurd. Hier gebruik je dan weer geen tijdsinterval maar de tijdstippen van communicatie op basis van verandering van waarde (bijv als pot waarde verandert van 3 naar 4). Zolang pot waarde op een geheel getal blijft staan, wordt er geen nieuwe data verzonden!! </li>
-<li>Uitbreiding: Combineer deze applicatie met ook de visualisatie van de 4 drukknoppen.</li>
+<li>Combineer deze applicatie met ook de visualisatie van de 4 drukknoppen.</li>
 </ul>
 </p>
 </div>
@@ -67,7 +67,7 @@ Opdracht4: Visualisatie van potentiometer + buttons.
 <p style="color:lightgreen; margin:10px">
 Opdracht5: Aansturen LED.
 <ul style="color: white;">
-<li>Zorg Op een dashboard dat je een LED op de ESP32 kan aansturen. Hiervoor zet je op het dashboard de toestand van de LED klaar (on/off). En druk daarna op knop van de ESP32 zodat die een SEND en een RECEIVE uitvoert om die toestand van de LED over te nemen.</li>
+<li>Zorg dat een dashboard een LED kan aansturen op de ESP32. Hiervoor zet je op het dashboard de toestand van de LED klaar (on/off). En druk daarna op knop van de ESP32 zodat die een SEND en een RECEIVE uitvoert om die toestand van de LED over te nemen.</li>
 <li>De communicatie moet dus via LoraWan, TTN en MQTT verlopen.</li>
 
 <li>Uitbreiding: Breid deze functionaliteit uit naar 8 LED's, 4 drukknoppen en potentiometer met schaalverdeling 0-10.</li>
