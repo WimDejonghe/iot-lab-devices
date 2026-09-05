@@ -62,6 +62,23 @@ module.exports = {
           '/lora/03-things/README.md',
         ]
       },
+      {
+        text: 'MODBUS',
+        children: [
+          '/modbus/00-index/README.md',
+          '/modbus/01-intro/README.md',
+          '/modbus/02-basis/README.md',
+          '/modbus/03-rtu/README.md',
+          '/modbus/04-tcp/README.md',
+          '/modbus/05-wave/README.md',
+          '/modbus/06-esp/README.md',
+          '/modbus/07-labo1/README.md',
+          '/modbus/08-relais/README.md',
+          '/modbus/09-input/README.md',
+          '/modbus/10-combi/README.md',
+          '/modbus/11-uitbreid/README.md',
+        ]
+      },
            
     ],
     sidebarDepth: 1,
