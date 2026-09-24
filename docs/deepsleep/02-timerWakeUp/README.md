@@ -113,7 +113,8 @@ Opdracht1: ESP32 in deepsleep en wakeup op basis van tijd.
 Opdracht2: ESP32 in deepsleep en wakeup op basis van tijd.
 <ul style="color: white;">
 <li>Maak een toepassing die de omgevingstemperatuur meet en die waarde om de 20 seconden publiceert op een MQTT broker topic. </li>
-<li>Intussentijd zit de microcontroller in een deepsleep.</li>
+<li>Om een accurate meting te hebben meet je best een aantal waarden na elkaar en neem je het gemiddelde van die waarden. </li>
+<li>Na de meting en het doorsturen gaat de microcontroller in een deepsleep gedurende 20 seconden.</li>
 <li>Maak een dashboard met de meetwaarde.</li>
 <li>Uitbreiding: publiceer de waarde tevens in een database en pas dashboard aan zodat deze een historiek weergeeft.</li>
 </ul>
