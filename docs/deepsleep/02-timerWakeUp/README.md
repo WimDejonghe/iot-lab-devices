@@ -100,7 +100,8 @@ Opdracht1: ESP32 in deepsleep en wakeup op basis van tijd.
 <li>Breng de ESP32 in een cyclus van 20 seconden werken (laat een LED knipperen op een frequentie van 10Hz).</li>
 <li>Na deze cyclus gaat de ESP32 voor 20 seconden in een deepsleep, waarna de cyclus zich herhaalt.</li>
 <li>Meet het stroomverbruik van de microcontroller, eens in werkmodus en eens in slaapmodus. Wat zijn die waarden? Wat is het totaal vermogen in deze twee toestanden?</li>
-<li>Uitbreiding: registreer om de 20 seconden uw GPS locatie en publiceer deze locatie op een dashboard. Laat de microcontroller op een batterij werken. </li>
+<li>Uitbreiding: registreer om de 20 seconden uw GPS locatie en publiceer deze locatie op een dashboard. Laat de microcontroller op een externe voeding werken. </li>
+<li>Indien er geen GPS modules beschikbaar zijn, gebruik dan een temperatuursensor of een lichtsensor.</li>
 </ul>
 </p>
 </div>
@@ -109,7 +110,7 @@ Opdracht1: ESP32 in deepsleep en wakeup op basis van tijd.
 
 <div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
-Opdracht3: ESP32 in deepsleep en wakeup op basis van tijd.
+Opdracht2: ESP32 in deepsleep en wakeup op basis van tijd.
 <ul style="color: white;">
 <li>Maak een toepassing die de omgevingstemperatuur meet en die waarde om de 20 seconden publiceert op een MQTT broker topic. </li>
 <li>Intussentijd zit de microcontroller in een deepsleep.</li>

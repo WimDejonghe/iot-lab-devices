@@ -28,14 +28,7 @@ module.exports = {
         text: 'About this Course',
         link: '/about-this-course/README.md',
       },
-      {
-        text: 'Introduction to Programming',
-        children: [
-          '/a-introductory/01-introduction/README.md',
-          '/a-introductory/02-introduction/README.md',
-          
-        ]
-      },
+
       {
         text: 'ESP32 Deepsleep',
         children: [
