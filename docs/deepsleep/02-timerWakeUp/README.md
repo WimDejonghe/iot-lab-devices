@@ -90,6 +90,10 @@ machine.deepsleep(10000)
 
 Na 10 seconden wordt de ESP32 wakker en voert de code vanaf het begin uit, net zoals wanneer je op de EN/RST-knop zou drukken.
 
+:bulb
+:::tip
+Om te vermijden dat je telkens uw device met Micropython moet flashen, kan je uw lokaal PY-bestand uploaden naar uw device vanuit thonny. Wijzig dan de naam van dat bestand op het device naar main.py
+:::
 
 ## Opdrachten:
 
