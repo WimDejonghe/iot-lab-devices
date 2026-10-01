@@ -127,6 +127,7 @@ Opdracht2: ESP32 in deepsleep en wakeup op basis van GPIO.
 <ul style="color: white;">
 <li>Gebruik twee digitale ingangen (drukknoppen). De ene kan de ESP32 in een deepsleep modus brengen, de andere kan de ESP32 terug wakker maken. </li>
 <li>Als de ESP32 wakker is wordt een I²C LCD display aangestuurd waarop de huidge tijd wordt getoond.</li>
+<li>Het I²C LCD display werkt het best op een spanning van 5V! Deze spanning kan je op uw ESP aftakken op de pin VBUS.</li>
 
 </ul>
 </p>
