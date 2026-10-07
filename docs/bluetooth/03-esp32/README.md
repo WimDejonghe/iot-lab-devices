@@ -13,10 +13,12 @@ Pas naam van uw device aan en zorg voor unieke UUID's.
 #deze code draait goed op de ESP32 feather V1
 #een RPI wordt gebruikt om connectie te kunnen maken met de ESP32.
 #code op de rpi is ble_mqtt_bridge.py
+#Run de code in het python enviroment : hier : source ~/ble_env/bin/activate
 #die code op de rpi zal connectie maken met de ESP32 via BLE en zal anderszijds connectie leggen met een MQTT broker.
 #bidirectionele comm is dan mogelijk.
 #Beide codes staan op mijn laptop :
 #C:\Users\u0113763\OneDrive - Hogeschool VIVES\VIVES\VakkenHBO5\esp32\python\bluetooth
+#deze code is esp32_v2.py
 
 
 import bluetooth
