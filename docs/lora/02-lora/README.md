@@ -360,7 +360,7 @@ TX: AT+SEND=2,000000000000007F0000000000000000,1
 RX: OK
 ```
 
-In het laatste commando zie AT+SEND.
+In het laatste commando zie je `AT+SEND`.
 
 ![Configuratie RX TX](./images/fig19.png)
 
