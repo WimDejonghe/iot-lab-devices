@@ -66,13 +66,11 @@ from machine import UART
 import time
 import sys
 import uselect
-
+from time import sleep
 
 # ============================================================
 # UART CONFIGURATIE
-# ESP32 Feather V2
-# TX = GPIO8
-# RX = GPIO7
+# ESP32 Feather V1 (TX = GPIO17, RX = GPIO16)
 # ============================================================
 
 uart = UART(
@@ -81,8 +79,8 @@ uart = UART(
     bits=8,
     parity=None,
     stop=1,
-    tx=8,
-    rx=7
+    tx=8, #Is voor ESP32 Feather V2
+    rx=7  #Is voor ESP32 Feather V2
 )
 
 
@@ -213,15 +211,54 @@ else:
 
 
 # ============================================================
-# THONNY SHELL -> I-NUCLEO
+# NETWERK SETUP FUNCTIE verander dit voor uw eigen lora modulle.
+# ============================================================
+
+def set_up():
+    print(at.send("AT+NTYP=1"))
+    sleep(1)
+    print(at.send("AT+DR=3"))
+    sleep(1)
+    print(at.send("AT+RX2DR=3"))
+    sleep(1)
+    print(at.send("AT+DC=0"))
+    sleep(1)
+    print(at.send("AT+APPEUI=0000002025000000")) #zorg dat deze code zo staat in TTN-End device
+    sleep(1)
+    print(at.send("AT+AK=059A707A9ADDC4969763A34031699327"))#haal deze code uit TTN-End device
+    sleep(1)
+    print(at.send("AT+JOIN=1"))
+    sleep(10)
+    print(at.send("AT+SEND=2,12000000000000AA00000000000000BB,1"))#te zenden data
+    sleep(5)
+    tekst = "Hallo"
+    hex_resultaat = tekst.encode('utf-8').hex()
+    stuur = "AT+SEND=2,"+ hex_resultaat + ",1"
+    print(stuur)
+    #print(at.send(f"AT+SEND=2,{hex_resultaat},1"))
+
+set_up()
+
+
+# ============================================================
+# THONNY SHELL & LORAWAN DOWNLINK LUISTER-LOOP
 # ============================================================
 
 poller = uselect.poll()
 poller.register(sys.stdin, uselect.POLLIN)
 
-
-while True:
-
+def getdata():
+    # 1. Vang spontane data op van de module (zoals downlinks of join-meldingen)
+    if uart.any():
+        incoming = uart.read()
+        if incoming:
+            try:
+                print("RX (Netwerk/Downlink):", str(incoming.decode('utf-8', errors='ignore')))
+                print(type((str(incoming.decode('utf-8', errors='ignore')))))
+            except:
+                print("RX (Netwerk/Downlink):", str(incoming))
+                print((str(incoming).split(',')[2]))
+    # 2. Vang handmatige commando's op vanuit de Thonny shell
     events = poller.poll(100)
 
     if events:
@@ -236,6 +273,10 @@ while True:
 
                 for line in response:
                     print("RX:", line)
+                    
+while True:
+    getdata()
+
 ```
 
 Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiseren.
