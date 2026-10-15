@@ -279,7 +279,7 @@ while True:
 
 ```
 
-Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiseren.
+Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiseren tussen twee LORA modules (dus zonder gebruik te maken van de Things Network(LORAWAN), zie vervolg).
 
 ![Configuratie RX TX](./images/fig6.png)
 
