@@ -8,6 +8,10 @@ mathjax:
 Dit is de MicroPython code die op de esp32 kan draaien. 
 Pas naam van uw device aan en zorg voor unieke UUID's.
 
+Laat volgende code draaien op uw ESP32. Uw ESP32 zal zijn naam broadcasten om de 100ms. Je hebt dan de kans om met uw GSM via de Android App : "Serial Bluetooth Terminal" een bidirectionele communicatie op te zetten tussen ESP32 en GSM App. Voor I-phone kan de App nRF worden gebruikt. Op Toledo staat een korte handleiding hiervoor.
+
+Eenmaal alles goed werkt tussen ESP32 en GSM kan overgegaan worden naar een communicatie tussen ESP32 en Rpi (en dan verder naar MQTT) ....
+
 ```python
 #deze code draait op de esp32 en zal via Bluetooth beschikbaar zijn voor connectie.
 #deze code draait goed op de ESP32 feather V1
