@@ -6,6 +6,23 @@ Je zal in volgende opdrachten vooral moeten bedenken op welke manier je data in 
 
 <div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
+Opdracht1: LoraWAN: Realiseer volgende:
+<ul style="color: white;">
+<li>Door op een drukknop te drukken van de shield (SW1) gebeurt volgende: </li>
+<li>De analoge waarde van de potentiometer wordt gelezen en doorgestuurd naar een Node-Red dashboard via Lora-TTN-MQTT.</li>
+<li>Op het dashboard maak je het mogelijk om 8 Leds op de extention shield aan te sturen. Het aansturen van de Leds kan maar pas gebeuren na een Send van de potentiometer, dus bij de receive. </li>
+
+<li>Het is dus niet nodig dat de Leds realtime worden aangestuurd! </li>
+</ul>
+</p>
+</div>
+
+***
+
+***
+
+<div style="background-color:darkgray; text-align:left; vertical-align:left; padding:15px;">
+<p style="color:lightgreen; margin:10px">
 Opdracht1: Visualisatie van 1 drukknop
 <ul style="color: white;">
 <li>Zorg ervoor dat als je telkens op 1 drukknop drukt van de ESP32 shield je dit kan visualiseren op een dashboard.</li>
@@ -19,7 +36,7 @@ Opdracht1: Visualisatie van 1 drukknop
 
 ***
 
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
+<div style="background-color:darkgray; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
 Opdracht2: Visualisatie van potentiometer 1.
 <ul style="color: white;">
@@ -33,7 +50,7 @@ Opdracht2: Visualisatie van potentiometer 1.
 
 ***
 
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
+<div style="background-color:darkgray; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
 Opdracht3: Visualisatie van potentiometer 2.
 <ul style="color: white;">
@@ -48,7 +65,7 @@ Opdracht3: Visualisatie van potentiometer 2.
 
 ***
 
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
+<div style="background-color:darkgray; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
 Opdracht4: Visualisatie van potentiometer + buttons.
 <ul style="color: white;">
@@ -63,7 +80,7 @@ Opdracht4: Visualisatie van potentiometer + buttons.
 
 ***
 
-<div style="background-color:darkgreen; text-align:left; vertical-align:left; padding:15px;">
+<div style="background-color:darkgray; text-align:left; vertical-align:left; padding:15px;">
 <p style="color:lightgreen; margin:10px">
 Opdracht5: Aansturen LED.
 <ul style="color: white;">
