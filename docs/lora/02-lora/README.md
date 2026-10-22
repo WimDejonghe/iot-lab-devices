@@ -307,6 +307,7 @@ Na deze stappen is het noodzakelijk om het End device te initialiseren en een jo
 
 ![Configuratie RX TX](./images/fig11.png)
 ![Configuratie RX TX](./images/fig17.png)
+![Config End device](./images/ttn7.png)
 
 Neem voor `JOINEUI` een waarde die voor u herkenbaar is. 
 
