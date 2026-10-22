@@ -12,7 +12,7 @@ Opdracht1: LoraWAN: Realiseer volgende:
 <li>De analoge waarde van de potentiometer wordt gelezen en doorgestuurd naar een Node-Red dashboard via Lora-TTN-MQTT.</li>
 <li>Op het dashboard maak je het mogelijk om 8 Leds op de extention shield aan te sturen. Het aansturen van de Leds kan maar pas gebeuren na een Send van de potentiometer, dus bij de receive. </li>
 
-<li>Het is dus niet nodig dat de Leds realtime worden aangestuurd! </li>
+<li>Het is dus niet nodig dat de Leds realtime worden aangestuurd! Zorg er ook voor dat de data van het dashboard voor alle switchen op het dashboard maar 1 keer wordt verstuurd en niet bij alle wijzigingen. (de MQTT broker topic werkt als buffer!! Werk ook in een QOS = 0) </li>
 </ul>
 </p>
 </div>
