@@ -230,11 +230,11 @@ def set_up():
     print(at.send("AT+JOIN=1"))
     sleep(10)
     print(at.send("AT+SEND=2,12000000000000AA00000000000000BB,1"))#te zenden data
-    sleep(5)
-    tekst = "Hallo"
-    hex_resultaat = tekst.encode('utf-8').hex()
-    stuur = "AT+SEND=2,"+ hex_resultaat + ",1"
-    print(stuur)
+    #sleep(5)
+    #tekst = "Hallo"
+    #hex_resultaat = tekst.encode('utf-8').hex()
+    #stuur = "AT+SEND=2,"+ hex_resultaat + ",1"
+    #print(stuur)
     #print(at.send(f"AT+SEND=2,{hex_resultaat},1"))
 
 set_up()
