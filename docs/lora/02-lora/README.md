@@ -287,7 +287,7 @@ Hieronder zie je enkele commando's om het zenden en het ontvangen te initialiser
 
 <YoutubeVideo videoId="rK8oJHZ9Q7U" />
 
-> - Maak een account aan op The Things Network
+> - Maak een account aan op The Things Network ([The Things Network](https://eu1.cloud.thethings.network/console/))
 > - Maak binnen uw account op The Things Network een Application aan
 > - Maak binnen die applicatie een END-device aan
 
